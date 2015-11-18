@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"heroku_s75tvv20.campus"},{"v":1,"unique":true,"key":{"slug":1},"name":"slug_1","ns":"heroku_s75tvv20.campus","background":true,"safe":null},{"v":1,"key":{"location.geo":"2dsphere"},"name":"location.geo_2dsphere","ns":"heroku_s75tvv20.campus","background":true,"safe":null,"2dsphereIndexVersion":2}]}
