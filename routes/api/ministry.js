@@ -28,6 +28,21 @@ exports.get = function(req, res) {
 	});
 }
 
+// comment
+exports.find = function(req, res) {
+	var item = new Ministry.model(),
+		data = (req.method == 'POST') ? req.body : req.query;
+
+	Ministry.model.find(data).exec(function(err, items) {
+        if (err) return res.apiError('database error', err);
+        if (!items) return res.apiError('not found');
+
+        res.apiResponse({
+            ministries: items
+        });
+    });
+}
+
 //create a ministry -- TODO: get rid of this
 exports.create = function(req, res) {
 	console.log(req);
@@ -91,3 +106,4 @@ exports.specialfind = function(req, res) {
 		});
 	});
 }
+
