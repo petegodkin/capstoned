@@ -65,42 +65,44 @@ exports.create = function(req, res) {
 	});
 }
 
-function addQueryParam(curString, targetCondition) {
-	if (targetCondition != undefined) {
-		curString = curString + ", " + targetCondition;
-		console.log("added " + curString);
-	}
-	return curString;
-}
-
-// Usage:
-//   var data = { 'first name': 'George', 'last name': 'Jetson', 'age': 110 };
-//   var querystring = EncodeQueryData(data);
-// 
-function EncodeQueryData(data)
-{
-   var ret = [];
-   for (var d in data)
-      ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
-   return ret.join("&");
-}
-
 //query for a ministry
-exports.specialfind = function(req, res) {
+/*exports.specialfind = function(req, res) {
 	console.log("url is  " + req.originalUrl +  " 1)" + req.query.condition + " order)" + req.query.order);
 	
+	var keywords = ["order", "select", "limit"];
 
-	var queryStr = req.query.condition;
+	//specifically bound conditions that we should filter out
 	var lim = (req.query.limit == undefined) ? 0 : req.query.limit;
+	var order = (req.query.order == undefined) ? null : req.query.order;
+
 	//still need to parse select somehow
 
-	console.log("trying to find " + queryStr);
-	console.log(("{ name : \"Destino\" }" === queryStr) + " " + ("{ name : \"Destino\" }" == queryStr));
+	var filters = [];
+	for (var property in req.query) {
+    	if (req.query.hasOwnProperty(property) && property != keywords[0] && property != keywords[1] && property != keywords[2]) {
+        	console.log("checking property" + property, req.query[property]);
+        	if (req.query[property] != null) {
+        		filters.push({field : property, val : req.query[property]});
+        	}
+    	}
+	}
 
-		var poo = "{ name : \"Destino\" }";
+	//get all and then filter after.... this seems inefficient
+	var query = Ministry.model.find().limit(lim).sort(order);
 
-	var query = Ministry.model.find( /*{ name : "Destino" }*/ poo).limit(lim);
+	//filter the query
+	for (var iter = 0; iter < filters.length; iter++) {
+		query.where(filters[iter].field).equals(filters[iter].val);
+	}
 
+	// for (var property in req.query) {
+ //    	if (req.query.hasOwnProperty(property) && property != keywords[0] && property != keywords[1] && property != keywords[2]) {
+ //        	console.log("checking property" + property, req.query[property]);
+ //        	if (req.query[propery] != null) {
+ //        		query.where(property).equals(req.query[property]);
+ //        	}
+ //    	}
+	// }
 
 
 	query.exec(function(err, items) {
@@ -110,5 +112,6 @@ exports.specialfind = function(req, res) {
 			ministries: items
 		});
 	});
-}
+
+}*/
 
