@@ -51,7 +51,8 @@ exports = module.exports = function(app) {
     app.get('/api/summermission/:id', keystone.middleware.api, routes.api.summermission.get);
     
     app.get('/api/ministry/list', keystone.middleware.api, routes.api.ministry.list);
-    app.get('/api/ministry/:id', keystone.middleware.api, routes.api.ministry.get);
+    app.get('/api/ministry/:id', keystone.middleware.api, routes.api.ministry.specialfind);
+    // app.get('/api/ministry/specialfind', keystone.middleware.api, routes.api.ministry.specialfind);
     app.all('/api/ministry/create', keystone.middleware.api, routes.api.ministry.create); //TODO: remove this
     
     app.get('/api/ministryteam/list', keystone.middleware.api, routes.api.ministryteam.list);
