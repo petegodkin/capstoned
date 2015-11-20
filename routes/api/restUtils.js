@@ -5,8 +5,24 @@ module.exports = {
 
         // default 0 means no limit
         var lim = req.query.limit ? req.query.limit : 0;
+        //gets order by dymically creating the object specified
+        var order = {}; //null, means dont sort
+        if (req.query.order) {
+            var parts = req.query.order.split(":");
+            order[parts[0].replace('{', '')] = parts[1].replace('}', '').replace(' ', '');
+        }
+        //creates select statements to only grab certain fields
+        var selects = {}; //default is an empty object, means grab all
+        if (req.query.select) {
+            var list = req.query.select.split(",");
+            console.log(list);
+            for (var iter = 0; iter < list.length; iter++) {
+                selects[list[iter].replace('}', '').replace('{', '').replace(' ', '')] = false;
+            }
+            console.log("selects statements are " + selects);
+        }
 
-        model.find(data).limit(lim).exec(function(err, items) {
+        model.find(data, selects).limit(lim).sort(order).exec(function(err, items) {
             if (err) return res.apiError('database error', err);
             if (!items) return res.apiError('not found');
 
