@@ -1,5 +1,6 @@
 var async = require('async'),
-	keystone = require('keystone');
+	keystone = require('keystone'),
+	restUtils = require('./restUtils');
 
 var Ministry = keystone.list("Ministry");
 
@@ -30,22 +31,7 @@ exports.get = function(req, res) {
 
 // comment
 exports.find = function(req, res) {
-	var item = new Ministry.model(),
-		data = (req.method == 'POST') ? req.body : req.query;
-
-	console.log(req.query);
-
-    // default 0 means no limit
-    var lim = req.query.limit ? req.query.limit : 0;
-
-	Ministry.model.find(data).limit(lim).exec(function(err, items) {
-        if (err) return res.apiError('database error', err);
-        if (!items) return res.apiError('not found');
-
-        res.apiResponse({
-            ministries: items
-        });
-    });
+	restUtils.find(Ministry.model, req, res);
 }
 
 //create a ministry -- TODO: get rid of this

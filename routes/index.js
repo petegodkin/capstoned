@@ -52,7 +52,7 @@ exports = module.exports = function(app) {
     
     app.get('/api/ministry/list', keystone.middleware.api, routes.api.ministry.list);
     app.get('/api/ministry/:id', keystone.middleware.api, routes.api.ministry.get);
-    app.get('/api/ministry/specialfind/:id', keystone.middleware.api, routes.api.ministry.specialfind);
+    //app.get('/api/ministry/specialfind/:id', keystone.middleware.api, routes.api.ministry.specialfind);
     app.all('/api/ministry/create', keystone.middleware.api, routes.api.ministry.create); //TODO: remove this
     app.all('/api/ministry/find/',  keystone.middleware.api, routes.api.ministry.find);
     
