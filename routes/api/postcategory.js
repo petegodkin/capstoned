@@ -1,30 +1,15 @@
 var async = require('async'),
-	keystone = require('keystone');
+	keystone = require('keystone'),
+	restUtils = require('./restUtils');
 
 var PostCategory = keystone.list("PostCategory");
 
 // lists all post categories
 exports.list = function(req, res) {
-	var query = PostCategory.model.find();
-	query.exec(function(err, items) {
-		
-		if (err) return res.apiError('database error', err);
-		
-		res.apiResponse({
-			postcategories: items
-		});	
-	});
+	restUtils.list(PostCategory.model, req, res);
 }
 
 // get a post category by id
 exports.get = function(req, res) {
-	PostCategory.model.findById(req.params.id).exec(function(err, item) {
-		
-		if (err) return res.apiError('database error', err);
-		if (!item) return res.apiError('not found');
-		
-		res.apiResponse({
-			postcategory: item
-		});
-	});
+	restUtils.get(PostCategory.model, req, res);
 }
