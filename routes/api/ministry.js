@@ -28,6 +28,21 @@ exports.get = function(req, res) {
 	});
 }
 
+// comment
+exports.find = function(req, res) {
+	var item = new Ministry.model(),
+		data = (req.method == 'POST') ? req.body : req.query;
+
+	Ministry.model.find(data).exec(function(err, items) {
+        if (err) return res.apiError('database error', err);
+        if (!items) return res.apiError('not found');
+
+        res.apiResponse({
+            ministries: items
+        });
+    });
+}
+
 //create a ministry -- TODO: get rid of this
 exports.create = function(req, res) {
 	console.log(req);
@@ -75,14 +90,14 @@ exports.create = function(req, res) {
 		query.where(filters[iter].field).equals(filters[iter].val);
 	}
 
-	/*for (var property in req.query) {
-    	if (req.query.hasOwnProperty(property) && property != keywords[0] && property != keywords[1] && property != keywords[2]) {
-        	console.log("checking property" + property, req.query[property]);
-        	if (req.query[propery] != null) {
-        		query.where(property).equals(req.query[property]);
-        	}
-    	}
-	}*/
+	// for (var property in req.query) {
+ //    	if (req.query.hasOwnProperty(property) && property != keywords[0] && property != keywords[1] && property != keywords[2]) {
+ //        	console.log("checking property" + property, req.query[property]);
+ //        	if (req.query[propery] != null) {
+ //        		query.where(property).equals(req.query[property]);
+ //        	}
+ //    	}
+	// }
 
 
 	query.exec(function(err, items) {
@@ -92,4 +107,6 @@ exports.create = function(req, res) {
 			ministries: items
 		});
 	});
+
 }*/
+
